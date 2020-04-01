@@ -5,6 +5,7 @@ var size = 10;
 var alpha = 0.25;
 var lambda = 0.01;
 var particles = [];
+var stop = false;
 
 var Particle = function(x,y){
     this.x = [x,y];
@@ -22,6 +23,16 @@ var Particle = function(x,y){
         }
     }
 }
+
+var toggle_stop = function(){
+    stop = ! stop;
+    var button = document.getElementById('toggle-stop');
+    button.innerText = {true:"Start", false:"Stop"}[stop];
+    if(!stop){
+        update();
+    }
+}
+
 
 var sample_normal = function(){
     var u = Math.random(), v = Math.random();
@@ -136,7 +147,7 @@ if (canvas.getContext) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 
-    var update = function(i){
+    var update = function(){
         //ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.save()
         ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
@@ -152,14 +163,16 @@ if (canvas.getContext) {
             p.update();
             draw_particle(p, `hsl(${p.orient/2/Math.PI*360}, 100%, 50%)`);
         });
-        setTimeout(function(){update(i+1)}, 20);
+        if(!stop){
+            setTimeout(function(){update()}, 20);
+        }
     }
 
     set_num_particle(100);
     update_alpha();
     update_lambda();
     update_num();
-    update(0);
+    update();
 } else {
     // canvas-unsupported code here
 }

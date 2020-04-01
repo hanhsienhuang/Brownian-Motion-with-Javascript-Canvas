@@ -30,6 +30,9 @@
         <canvas id="brownian-motion" width=800 height=600 style="border:solid;"></canvas>
       </div>
       <div id="control">
+        <div>
+          <button id="toggle-stop" onclick="toggle_stop()">Stop</button>
+        </div>
         <div class="parameters">
           <div class="param-name">
             \(\lambda = \)
@@ -54,10 +57,19 @@
           <div class="param-name">
             \(N = \)
           </div>
-          <input type="number" id="num-value" class="parameters" min=1 max=1000 onchange="num_input_text()">
+          <input type="number" id="num-value" class="parameters" min=1 max=1000 oninput="num_input_text()">
         </div>
         <div class="sliders">
           1<input id="num-slide" class="sliders" type="range" step=1 min=1 max=1000 oninput="num_input_slide()">1000
+        </div>
+        <div style="padding:10px">
+          Color: 
+          <input type="radio" name="color" value="none">
+          <label> None </label>
+          <input type="radio" name="color" value="direction">
+          <label> Direction </label>
+          <input type="radio" name="color" value="speed">
+          <label> Speed </label>
         </div>
       </div>
     </div>
