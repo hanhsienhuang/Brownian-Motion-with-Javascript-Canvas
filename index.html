@@ -12,11 +12,53 @@
     <div id="container">
       <h1> Browian Motion</h1>
 
-      <canvas id="canvas" width=800 height=600 style="border:solid;"></canvas>
-      <div class="math">
-        This is the equation
-          $$\mathbf{x}_{t+1} = \mathbf{x}_t + \mathbf{v}_t$$
+      <div>
+        This demo visualizes the equations
+        $$
+        \left\{
+        \begin{aligned}
+          \mathbf{x}_{t+1} &= \mathbf{x}_t + \mathbf{v}_t
+          \\
+          \mathbf{v}_{t+1} &= (1-\lambda)\mathbf{v}_t + \alpha\mathbf{\eta}
+        \end{aligned}
+        \right.
+        $$
+        where \(\lambda\) and \(\alpha\) are coefficients and \(\eta\) is Gaussian noise with std = 1.
+      </div>
 
+      <div style=" padding:20px;">
+        <canvas id="brownian-motion" width=800 height=600 style="border:solid;"></canvas>
+      </div>
+      <div id="control">
+        <div class="parameters">
+          <div class="param-name">
+            \(\lambda = \)
+          </div>
+          <input type="text" id="lambda-value" class="parameters" onchange="lambda_input_text()">
+        </div>
+        <div class="sliders">
+          0<input id="lambda-slide" class="sliders" type="range" step=0.01 min=0 max=1 oninput="lambda_input_slide()">1
+        </div>
+        <br>
+        <div class="parameters">
+          <div class="param-name">
+            \(\alpha = \)
+          </div>
+          <input type="text" id="alpha-value" class="parameters" onchange="alpha_input_text()">
+        </div>
+        <div class="sliders">
+          0<input id="alpha-slide" class="sliders" type="range" step=0.01 min=0 max=10 oninput="alpha_input_slide()">10
+        </div>
+        <br>
+        <div class="parameters">
+          <div class="param-name">
+            \(N = \)
+          </div>
+          <input type="number" id="num-value" class="parameters" min=1 max=1000 onchange="num_input_text()">
+        </div>
+        <div class="sliders">
+          1<input id="num-slide" class="sliders" type="range" step=1 min=1 max=1000 oninput="num_input_slide()">1000
+        </div>
       </div>
     </div>
     <script src="script.js"></script>

@@ -8,5 +8,41 @@ body{
     width: 80%;
     display: block;
     margin: auto;
+    padding-top: 30px;
+    padding-bottom: 100px;
+    min-width: 600px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+#brownian-motion{
+    width: 100%;
+    max-width: 800px;
+}
+
+div.parameters{
+    display: inline-block;
+    text-align: left;
+    width: 150px;
+}
+
+div.param-name{
+    display: inline-block;
+    text-align: right;
+    width: 50px;
+}
+  
+div.sliders{
+    display: inline-block;
+    text-align: left;
+    width: 250px;
+}
+  
+input.parameters{
+    width: 50px;
+}
+
+input.sliders{
+    width: 170px;
+}
+
+

@@ -1,7 +1,10 @@
-var canvas = document.getElementById('canvas');
+var canvas = document.getElementById('brownian-motion');
 var width = canvas.width;
 var height = canvas.height;
-var size = 10
+var size = 10;
+var alpha = 0.25;
+var lambda = 0.01;
+var particles = [];
 
 var Particle = function(x,y){
     this.x = [x,y];
@@ -27,6 +30,84 @@ var sample_normal = function(){
     var z1 = r*Math.cos(theta);
     var z2 = r*Math.sin(theta);
     return [z1, z2];
+}
+
+var lambda_input_slide = function(){
+    var value = document.getElementById('lambda-slide').value;
+    lambda = value;
+    update_lambda();
+}
+
+var lambda_input_text = function(){
+    var value = parseFloat(document.getElementById('lambda-value').value);
+    if(value != NaN && value >= 0 && value <= 1){
+        lambda = value;
+    }
+    update_lambda();
+}
+
+var update_lambda = function(){
+    var text = document.getElementById('lambda-value');
+    var slider = document.getElementById('lambda-slide');
+    slider.value = lambda;
+    text.value = lambda;
+}
+
+var alpha_input_slide = function(){
+    var value = document.getElementById('alpha-slide').value;
+    alpha = value;
+    update_alpha();
+}
+
+var alpha_input_text = function(){
+    var value = parseFloat(document.getElementById('alpha-value').value);
+    if(value != NaN && value >= 0 && value <= 10){
+        alpha = value;
+    }
+    update_alpha();
+}
+
+var update_alpha = function(){
+    var text = document.getElementById('alpha-value');
+    var slider = document.getElementById('alpha-slide');
+    slider.value = alpha;
+    text.value = alpha;
+}
+
+var num_input_slide = function(){
+    var value = document.getElementById('num-slide').value;
+    set_num_particle(value);
+    update_num();
+}
+
+var num_input_text = function(){
+    var value = parseInt(document.getElementById('num-value').value);
+    if(value != NaN && value >= 1 && value <= 1000){
+        set_num_particle(value);
+    }
+    update_num();
+}
+
+
+var update_num = function(){
+    var text = document.getElementById('num-value');
+    var slider = document.getElementById('num-slide');
+    slider.value = particles.length;
+    text.value = particles.length;
+}
+
+var set_num_particle = function(N){
+    var n = particles.length;
+    if(n < N){
+        for(let i=0; i<N-n; i++){
+            particles.push(new Particle(Math.random()*width, Math.random()*height));
+        }
+    }else{
+        for(let i=0; i<n-N; i++){
+            particles.pop();
+        }
+    }
+
 }
 
 if (canvas.getContext) {
@@ -63,21 +144,21 @@ if (canvas.getContext) {
         ctx.restore()
 
         particles.forEach(function(p){
-            p.v[0] *= 0.99;
-            p.v[1] *= 0.99;
+            p.v[0] *= (1-lambda);
+            p.v[1] *= (1-lambda);
             var noise = sample_normal();
-            p.v[0] += noise[0]/4;
-            p.v[1] += noise[1]/4;
+            p.v[0] += noise[0]*alpha;
+            p.v[1] += noise[1]*alpha;
             p.update();
             draw_particle(p, `hsl(${p.orient/2/Math.PI*360}, 100%, 50%)`);
         });
         setTimeout(function(){update(i+1)}, 20);
     }
 
-    var particles = [];
-    for(let i=0; i<200; i++){
-        particles.push(new Particle(Math.random()*width, Math.random()*height));
-    }
+    set_num_particle(100);
+    update_alpha();
+    update_lambda();
+    update_num();
     update(0);
 } else {
     // canvas-unsupported code here
