@@ -13,7 +13,7 @@
       <h1> Browian Motion</h1>
 
       <div>
-        This demo visualizes the equations
+        This is a visualization of the the equations
         $$
         \left\{
         \begin{aligned}
@@ -26,8 +26,8 @@
         where \(\lambda\) and \(\alpha\) are coefficients and \(\eta\) is Gaussian noise with std = 1.
       </div>
 
-      <div style=" padding:20px;">
-        <canvas id="brownian-motion" width=800 height=600 style="border:solid;"></canvas>
+      <div class="canvas-container">
+        <canvas class="canvas" id="brownian-motion" width=800 height=600></canvas>
       </div>
       <div id="control">
         <div>
@@ -63,14 +63,23 @@
           1<input id="num-slide" class="sliders" type="range" step=1 min=1 max=1000 oninput="num_input_slide()">1000
         </div>
         <div style="padding:10px">
-          Color: 
-          <input type="radio" name="color" value="none">
-          <label> None </label>
-          <input type="radio" name="color" value="direction">
-          <label> Direction </label>
-          <input type="radio" name="color" value="speed">
-          <label> Speed </label>
+          <form oninput="color_input()">
+            Color: 
+            <input type="radio" name="color-control" value="none">
+            <label> None </label>
+            <input type="radio" name="color-control" value="direction">
+            <label> Direction </label>
+            <input type="radio" name="color-control" value="speed">
+            <label> Speed </label>
+          </form>
         </div>
+      </div>
+      <div class="canvas-container">
+        <canvas class="canvas" id="speed-plot" width=800 height=600></canvas>
+      </div>
+      <div>
+        The graph above is the cumulative distribution of all the particles with respect to speed. The blue curve is the estimated equilibrium cumulative distribution.
+
       </div>
     </div>
     <script src="script.js"></script>
